@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<body>
+
+<div id="internal" class="row">
+    <div id="internel_left" class="col col-lg-4">
+        <ul id="myUL">
+            <li><span class="caret">Venues</span>
+                <ul class="nested">
+                    {% for category in all_categories.response.categories %}
+                        {% if category.categories==null %}
+                            <li><a href="{{ path('new', { 'query':category.name}) }}" class="link">{{category.name}}</li>
+                        {% else %}
+                            <li><span class="caret"><a href="{{ path('new', { 'query':category.name}) }}" class="link">{{ category.name}}</a></span>
+                                <ul class="nested">
+                                    {% for c in category.categories %}
+                                    {% if c.categories==null %}
+                                    <li><a href="{{ path('new', { 'query':c.name}) }}" class="link">{{ c.name}}</a></li>
+                                    {% else %}
+                                    <li><span class="caret"><a href="{{ path('new', { 'query':c.name}) }}" class="link">{{ c.name}}</span>
+                                        <ul class="nested">
+                                            {% for ct in c.categories %}
+                                                <li><a href="{{ path('new', { 'query':ct.name}) }}" class="link">{{ ct.name}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                        {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+{% endblock %}
